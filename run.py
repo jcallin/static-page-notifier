@@ -23,7 +23,7 @@ def run():
             send_email()
             page = new_page_parsed
         else:
-            print("Page is the same since last check!")
+            print("Page is the same since last check! Check performed at {}".format(datetime.now().isoformat()))
         # Sleep for 24 hours
         time.sleep(12 * 60 * 60)
 
@@ -80,11 +80,11 @@ def send_email():
               <p>
                 There may be new items on the
                 <a href='http://shop.theprobar.com/Products/Sale'>Probar sale page</a>
-                as of {}
+                as of UTC {}
               </p>
             </body>
     </html>
-    """.format(datetime.now().time())
+    """.format(datetime.now().isoformat())
 
     # Create message container - the correct MIME type is multipart/alternative.
     msg = MIMEMultipart('alternative')
@@ -119,7 +119,7 @@ def send_email():
     except Exception as e:
         print ("Error: ", e)
     else:
-        print ("Email sent!")
+        print ("Email sent to {} at {}!".format(RECIPIENTS, datetime.now().isoformat()))
 
 def get_recipients():
     with open('recipients.txt') as f:
